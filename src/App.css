@@ -1,5 +1,11 @@
 .App {
-  text-align: center;
+}
+
+.App-board {
+  margin-left: 50px;
+  margin-top: 50px;
+  height: 50rem;
+  width: 90rem;
 }
 
 .App-logo {
