@@ -64,7 +64,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Board playerTurn={this.playerTurn} />
+        <Board playerTurn={this.playerTurn}
+               boardModel={this.state.gameModel.boardModel} />
       </div>
     );
   }

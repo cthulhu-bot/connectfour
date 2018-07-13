@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 export default class Board extends Component {
+
+  figureOutTheCircleColorFromProps() {
+    return "red" || "blue";
+  }
+
   render() {
     return (
       <svg className="App-board">
@@ -34,7 +39,7 @@ export default class Board extends Component {
         <circle cx="600" cy="100" r="35" fill="grey" />
         <circle cx="750" cy="100" r="35" fill="grey" />
         <circle cx="900" cy="100" r="35" fill="grey" />
-        <circle cx="1050" cy="100" r="35" fill="grey" />
+        <circle cx="1050" cy="100" r="35" fill="blue" />
 
         <circle cx="150" cy="220" r="35" fill="grey" />
         <circle cx="300" cy="220" r="35" fill="grey" />
