@@ -62,10 +62,73 @@ class App extends Component {
     });
   }
 
+  /* The IsThereAWinner? algorithm:
+     Reduction of the 7x7 matrix surrounding the last placed piece
+     Reduce the 7x7 to the 4 axes surrounding the new piece:
+      1. Vertical
+      2. Horizontal
+      3. Diagonal (forward slash)
+      4. Diagonal (back slash)
+     Build up these 4 different axes and reduce to see if any of them
+     have 4 of the same contiguous color */
   evalWinner = (boardModel, lastPosition, currentPlayer) => {
-    console.log('boardModel: ', boardModel);
-    console.log('pos: ', lastPosition);
-    return null;
+    let vertical = [], horizontal = [], fslash = [], bslash = [];
+    const playerColor = currentPlayer === 'Player 1' ? 1 : 2;
+
+    vertical = this.getVerticalPiecesAroundCenter(boardModel, lastPosition);
+    horizontal = this.getHorizontalPiecesAroundCenter(boardModel, lastPosition);
+    fslash = this.getFSlashPiecesAroundCenter(boardModel, lastPosition);
+    bslash = this.getBSlashPiecesAroundCenter(boardModel, lastPosition);
+    let axes = [vertical, horizontal, fslash, bslash];
+
+    const canHazWinner = axes.some(axis => {
+      const maxRowLength = axis.reduce((acc, piece) => {
+        return piece === playerColor ? ++acc : 0;
+      }, 0);
+      return maxRowLength >= 4;
+    });
+
+    return canHazWinner ? currentPlayer : null;
+  }
+
+  getVerticalPiecesAroundCenter = (boardModel, center) => {
+    let vertical = [];
+    for (let i = -3; i <= 3; i++) {
+      if (boardModel[center + (i*7)]) {
+        vertical.push(boardModel[center + (i*7)]);
+      }
+    }
+    return vertical;
+  }
+
+  getHorizontalPiecesAroundCenter = (boardModel, center) => {
+    let horizontal = [];
+    for (let i = -3; i<= 3; i++) {
+      if (boardModel[center + i]) {
+        horizontal.push(boardModel[center + i]);
+      }
+    }
+    return horizontal;
+  }
+
+  getFSlashPiecesAroundCenter = (boardModel, center) => {
+    let fslash = [];
+    for (let i = -3; i <= 3; i++) {
+      if (boardModel[center + ((i*7) - i)]) {
+        fslash.push(boardModel[center + ((i*7) - i)]);
+      }
+    }
+    return fslash;
+  }
+
+  getBSlashPiecesAroundCenter = (boardModel, center) => {
+    let bslash = [];
+    for (let i = -3; i <= 3; i++) {
+      if (boardModel[center + ((i*7) + i)]) {
+        bslash.push(boardModel[center + ((i*7) + i)]);
+      }
+    }
+    return bslash;
   }
 
   render() {

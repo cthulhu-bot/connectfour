@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 
 export default class Board extends Component {
 
-  figureOutTheCircleColorFromProps() {
-    return "red" || "blue";
-  }
-
   renderCircles() {
     return this.props.boardModel.map((piece, idx) => {
       const circColor = piece === 0 ? "grey" : piece === 1 ? "blue" : "red";
@@ -43,55 +39,6 @@ export default class Board extends Component {
           className="App-column">7</text>
 
         {this.renderCircles()}
-
-        {/* <circle cx="150" cy="100" r="35" fill="grey" />
-        <circle cx="300" cy="100" r="35" fill="grey" />
-        <circle cx="450" cy="100" r="35" fill="grey" />
-        <circle cx="600" cy="100" r="35" fill="grey" />
-        <circle cx="750" cy="100" r="35" fill="grey" />
-        <circle cx="900" cy="100" r="35" fill="grey" />
-        <circle cx="1050" cy="100" r="35" fill="blue" />
-
-        <circle cx="150" cy="220" r="35" fill="grey" />
-        <circle cx="300" cy="220" r="35" fill="grey" />
-        <circle cx="450" cy="220" r="35" fill="grey" />
-        <circle cx="600" cy="220" r="35" fill="grey" />
-        <circle cx="750" cy="220" r="35" fill="grey" />
-        <circle cx="900" cy="220" r="35" fill="grey" />
-        <circle cx="1050" cy="220" r="35" fill="grey" />
-
-        <circle cx="150" cy="340" r="35" fill="grey" />
-        <circle cx="300" cy="340" r="35" fill="grey" />
-        <circle cx="450" cy="340" r="35" fill="grey" />
-        <circle cx="600" cy="340" r="35" fill="grey" />
-        <circle cx="750" cy="340" r="35" fill="grey" />
-        <circle cx="900" cy="340" r="35" fill="grey" />
-        <circle cx="1050" cy="340" r="35" fill="grey" />
-
-        <circle cx="150" cy="460" r="35" fill="grey" />
-        <circle cx="300" cy="460" r="35" fill="grey" />
-        <circle cx="450" cy="460" r="35" fill="grey" />
-        <circle cx="600" cy="460" r="35" fill="grey" />
-        <circle cx="750" cy="460" r="35" fill="grey" />
-        <circle cx="900" cy="460" r="35" fill="grey" />
-        <circle cx="1050" cy="460" r="35" fill="grey" />
-
-        <circle cx="150" cy="580" r="35" fill="grey" />
-        <circle cx="300" cy="580" r="35" fill="grey" />
-        <circle cx="450" cy="580" r="35" fill="grey" />
-        <circle cx="600" cy="580" r="35" fill="grey" />
-        <circle cx="750" cy="580" r="35" fill="grey" />
-        <circle cx="900" cy="580" r="35" fill="grey" />
-        <circle cx="1050" cy="580" r="35" fill="grey" />
-
-        <circle cx="150" cy="700" r="35" fill="grey" />
-        <circle cx="300" cy="700" r="35" fill="grey" />
-        <circle cx="450" cy="700" r="35" fill="grey" />
-        <circle cx="600" cy="700" r="35" fill="grey" />
-        <circle cx="750" cy="700" r="35" fill="grey" />
-        <circle cx="900" cy="700" r="35" fill="grey" />
-        <circle cx="1050" cy="700" r="35" fill="grey" /> */}
-
       </svg>
 
     );
