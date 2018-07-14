@@ -40,7 +40,6 @@ export default class Board extends Component {
 
         {this.renderCircles()}
       </svg>
-
     );
   }
 }

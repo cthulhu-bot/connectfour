@@ -1,4 +1,5 @@
 .App {
+  display: flex;
   height: 50rem;
   width: 95rem;
 }
@@ -8,12 +9,14 @@
 }
 
 .App-board {
-  margin-left: 50px;
-  margin-top: 50px;
   height: 50rem;
   width: 75rem;
 }
 
 .App-column {
   cursor: pointer;
+}
+
+.App-display {
+  margin-left: 50px;
 }

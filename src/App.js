@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board';
+import Display from './Display';
 import './App.css';
 
 class App extends Component {
@@ -23,25 +24,6 @@ class App extends Component {
     }
   }
 
-  placePiece(column, gameModel) {
-    let newGameModel = gameModel, newPiecePos = null;
-    const columnSlots = newGameModel.boardModel.filter((slot, idx) => idx % 7 === column - 1);
-    const columnFilled = columnSlots.every((slot, idx) => slot !== 0);
-
-    if (!columnFilled) {
-      const firstEmptySlot = columnSlots.reduce((acc, slot, idx) => {
-        return slot === 0 ? idx : acc;
-      }, 0);
-      newPiecePos = (column - 1) + (7 * firstEmptySlot);
-      newGameModel.boardModel[newPiecePos] = gameModel.currentPlayer === 'Player 1' ? 1 : 2;
-    } else {
-      throw { message: `Column ${column} filled` };
-    }
-    newGameModel.winner = this.evalWinner(gameModel.boardModel, newPiecePos, gameModel.currentPlayer);
-    
-    return newGameModel;
-  }
-
   playerTurn = (columnNum) => () => {
     const currentPlayer = this.state.gameModel.currentPlayer;
 
@@ -60,6 +42,25 @@ class App extends Component {
     this.setState((prevState, props) => {
       return { gameModel: this.gameModel };
     });
+  }
+
+  placePiece(column, gameModel) {
+    let newGameModel = gameModel, newPiecePos = null;
+    const columnSlots = newGameModel.boardModel.filter((slot, idx) => idx % 7 === column - 1);
+    const columnFilled = columnSlots.every((slot, idx) => slot !== 0);
+
+    if (!columnFilled) {
+      const firstEmptySlot = columnSlots.reduce((acc, slot, idx) => {
+        return slot === 0 ? idx : acc;
+      }, 0);
+      newPiecePos = (column - 1) + (7 * firstEmptySlot);
+      newGameModel.boardModel[newPiecePos] = gameModel.currentPlayer === 'Player 1' ? 1 : 2;
+    } else {
+      throw { message: `Column ${column} filled` };
+    }
+    newGameModel.winner = this.evalWinner(gameModel.boardModel, newPiecePos, gameModel.currentPlayer);
+    
+    return newGameModel;
   }
 
   /* The IsThereAWinner? algorithm:
@@ -136,6 +137,7 @@ class App extends Component {
       <div className="App">
         <Board playerTurn={this.playerTurn}
                boardModel={this.state.gameModel.boardModel} />
+        <Display className="App-display" gameModel={this.state.gameModel} />
       </div>
     );
   }
