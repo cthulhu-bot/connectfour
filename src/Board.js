@@ -6,6 +6,15 @@ export default class Board extends Component {
     return "red" || "blue";
   }
 
+  renderCircles() {
+    return this.props.boardModel.map((piece, idx) => {
+      const circColor = piece === 0 ? "grey" : piece === 1 ? "blue" : "red";
+      const xcoord = 150 + (150 * (idx % 7));
+      const ycoord = 100 + (120 * Math.floor(idx / 7));
+      return <circle cx={xcoord.toString()} cy={ycoord.toString()} r="35" fill={circColor} key={idx} />
+    });
+  }
+
   render() {
     return (
       <svg className="App-board">
@@ -33,7 +42,9 @@ export default class Board extends Component {
           onClick={this.props.playerTurn(7)}
           className="App-column">7</text>
 
-        <circle cx="150" cy="100" r="35" fill="grey" />
+        {this.renderCircles()}
+
+        {/* <circle cx="150" cy="100" r="35" fill="grey" />
         <circle cx="300" cy="100" r="35" fill="grey" />
         <circle cx="450" cy="100" r="35" fill="grey" />
         <circle cx="600" cy="100" r="35" fill="grey" />
@@ -79,7 +90,7 @@ export default class Board extends Component {
         <circle cx="600" cy="700" r="35" fill="grey" />
         <circle cx="750" cy="700" r="35" fill="grey" />
         <circle cx="900" cy="700" r="35" fill="grey" />
-        <circle cx="1050" cy="700" r="35" fill="grey" />
+        <circle cx="1050" cy="700" r="35" fill="grey" /> */}
 
       </svg>
 
