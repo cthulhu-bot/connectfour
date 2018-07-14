@@ -18,9 +18,19 @@
 }
 
 .App-display {
-  margin-left: 50px;
+  margin-left: 10px;
+  margin-top: 1rem;
 }
 
 .App-display-winner {
   margin-top: 1rem;
+}
+
+.App-display-button {
+  margin-top: 1rem;
+}
+
+.App-display-error {
+  margin-top: 1rem;
+  color: red;
 }

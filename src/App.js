@@ -18,6 +18,7 @@ class App extends Component {
         0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0],
         error: null,
+        stalemate: false,
     };
     this.state = {
       gameModel: this.gameModel,
@@ -31,13 +32,16 @@ class App extends Component {
       this.gameModel = this.placePiece(columnNum, this.state.gameModel);
     } catch (e) {
       this.setState((prevState, props) => {
-        prevState.error = e.message;
-        return prevState;
+        this.gameModel.error = e.message;
+        return { gameModel: this.gameModel };
       });
+      return;
     }
 
     this.gameModel.currentPlayer = currentPlayer === 'Player 1' ? 'Player 2' : 'Player 1';
     this.gameModel.error = null;
+    this.gameModel.stalemate = this.gameModel.winner === 'none' &&
+                               this.boardFilled(this.gameModel.boardModel);
 
     this.setState((prevState, props) => {
       return { gameModel: this.gameModel };
@@ -58,7 +62,9 @@ class App extends Component {
     } else {
       throw { message: `Column ${column} filled` };
     }
-    newGameModel.winner = this.evalWinner(gameModel.boardModel, newPiecePos, gameModel.currentPlayer);
+    if (gameModel.winner === 'none' && !gameModel.stalemate) {
+      newGameModel.winner = this.evalWinner(gameModel.boardModel, newPiecePos, gameModel.currentPlayer);
+    }
     
     return newGameModel;
   }
@@ -89,7 +95,7 @@ class App extends Component {
       return maxRowLength >= 4;
     });
 
-    return canHazWinner ? currentPlayer : null;
+    return canHazWinner ? currentPlayer : 'none';
   }
 
   getVerticalPiecesAroundCenter = (boardModel, center) => {
@@ -132,12 +138,24 @@ class App extends Component {
     return bslash;
   }
 
+  boardFilled = (boardModel) => boardModel.every(piece => piece !== 0);
+
+  wargames = () => {
+    console.log(this.state.gameModel);
+    while(this.state.gameModel.winner === 'none' &&
+          !this.state.gameModel.stalemate) {
+      const randomColumn = Math.floor(Math.random() * (8 - 1)) + 1;
+      this.playerTurn(randomColumn);
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <Board playerTurn={this.playerTurn}
                boardModel={this.state.gameModel.boardModel} />
-        <Display className="App-display" gameModel={this.state.gameModel} />
+        <Display gameModel={this.state.gameModel}
+                 wargames={this.wargames} />
       </div>
     );
   }
