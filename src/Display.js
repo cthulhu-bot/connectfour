@@ -6,7 +6,6 @@ export default class Display extends Component {
       if (this.props.gameModel.winner === 'none' &&
           !this.props.gameModel.stalemate &&
           this.props.gameModel.wargame) {
-              console.log('display component did update');
               const randomColumn = Math.floor(Math.random() * (8 - 1)) + 1;
               this.props.initWargame(randomColumn);
       }
@@ -23,7 +22,6 @@ export default class Display extends Component {
     }
 
     render() {
-        console.log('display gameModel: ', this.props.gameModel);
         const randomColumn = Math.floor(Math.random() * (8 - 1)) + 1;
         return (
             <div className="App-display">
@@ -32,7 +30,7 @@ export default class Display extends Component {
                     <div className="App-display-error">{"Error: " + this.props.gameModel.error}</div> : <div />}
                 <button className="App-display-button" 
                         onClick={() => this.props.initWargame(randomColumn)}>
-                Yes, number of players zero
+                number of players zero
                 </button>
             </div>
         )
