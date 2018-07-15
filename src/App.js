@@ -19,6 +19,7 @@ class App extends Component {
         0, 0, 0, 0, 0, 0, 0],
         error: null,
         stalemate: false,
+        wargame: false,
     };
     this.state = {
       gameModel: this.gameModel,
@@ -26,10 +27,10 @@ class App extends Component {
   }
 
   playerTurn = (columnNum) => () => {
-    const currentPlayer = this.state.gameModel.currentPlayer;
+    const currentPlayer = this.gameModel.currentPlayer;
 
     try {
-      this.gameModel = this.placePiece(columnNum, this.state.gameModel);
+      this.gameModel = this.placePiece(columnNum, this.gameModel);
     } catch (e) {
       this.setState((prevState, props) => {
         this.gameModel.error = e.message;
@@ -140,14 +141,12 @@ class App extends Component {
 
   boardFilled = (boardModel) => boardModel.every(piece => piece !== 0);
 
-  wargames = () => {
-    console.log(this.state.gameModel);
-    while(this.state.gameModel.winner === 'none' &&
-          !this.state.gameModel.stalemate) {
-      const randomColumn = Math.floor(Math.random() * (8 - 1)) + 1;
-      this.playerTurn(randomColumn);
-    }
-  }
+  initWargame = (column) => {
+    this.setState((prevState, props) => {
+      this.gameModel.wargame = true;
+      return { gameModel: this.gameModel };
+    }, this.playerTurn(column));
+  };
 
   render() {
     return (
@@ -155,7 +154,8 @@ class App extends Component {
         <Board playerTurn={this.playerTurn}
                boardModel={this.state.gameModel.boardModel} />
         <Display gameModel={this.state.gameModel}
-                 wargames={this.wargames} />
+                 playerTurn={this.playerTurn}
+                 initWargame={this.initWargame} />
       </div>
     );
   }
