@@ -90,9 +90,8 @@ class App extends Component {
     let axes = [vertical, horizontal, fslash, bslash];
 
     const canHazWinner = axes.some(axis => {
-      const maxRowLength = axis.reduce((acc, piece) => {
-        return piece === playerColor ? ++acc : 0;
-      }, 0);
+      console.log(axis);
+      const maxRowLength = this.getMaxRowLength(axis, playerColor);
       return maxRowLength >= 4;
     });
 
@@ -112,12 +111,13 @@ class App extends Component {
   getHorizontalPiecesAroundCenter = (boardModel, center) => {
     let horizontal = [];
     const leftBoundary = center - (center % 7);
-    const rightBoundary = center + (7 - (center % 7));
+    const rightBoundary = center + (6 - (center % 7));
     for (let i = -3; i<= 3; i++) {
-      if (boardModel[center + i] >= 0 && 
-          (center + i >= leftBoundary) && 
-          (center + i <= rightBoundary)) {
-        horizontal.push(boardModel[center + i]);
+      const horizontalIdx = center + i;
+      if (boardModel[horizontalIdx] >= 0 && 
+          (horizontalIdx >= leftBoundary) && 
+          (horizontalIdx <= rightBoundary)) {
+        horizontal.push(boardModel[horizontalIdx]);
       }
     }
     return horizontal;
@@ -151,6 +151,21 @@ class App extends Component {
       }
     }
     return bslash;
+  }
+
+  getMaxRowLength = (arr, player) => {
+    const maxLengths = [];
+    let currLength = 0;
+    arr.forEach(entry => {
+      if (entry === player) {
+        currLength++;
+      } else {
+        maxLengths.push(currLength);
+        currLength = 0;
+      }
+    });
+    maxLengths.push(currLength);
+    return Math.max(...maxLengths);
   }
 
   boardFilled = (boardModel) => boardModel.every(piece => piece !== 0);
