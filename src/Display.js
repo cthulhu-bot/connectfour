@@ -16,7 +16,14 @@ export default class Display extends Component {
             <div>
                 <div>Please click on the column</div>
                 <div>headers to play</div>
-                <div className='App-display-winner'>{`Winner: ${this.props.gameModel.stalemate ? 'stalemate' : this.props.gameModel.winner}`}</div>
+                <div className='App-display-winner'>{`Winner: `}</div>
+                <div className={this.props.gameModel.winner === 'none' ? 
+                    '' : 
+                    this.props.gameModel.winner === 'Player 1' ? 
+                        'App-display-winner-playerone' : 
+                        'App-display-winner-playertwo'}>
+                    {this.props.gameModel.stalemate ? 'stalemate' : this.props.gameModel.winner}
+                </div>
             </div>
         );
     }

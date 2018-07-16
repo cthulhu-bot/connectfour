@@ -102,7 +102,7 @@ class App extends Component {
   getVerticalPiecesAroundCenter = (boardModel, center) => {
     let vertical = [];
     for (let i = -3; i <= 3; i++) {
-      if (boardModel[center + (i*7)]) {
+      if (boardModel[center + (i*7)] >= 0) {
         vertical.push(boardModel[center + (i*7)]);
       }
     }
@@ -111,8 +111,12 @@ class App extends Component {
 
   getHorizontalPiecesAroundCenter = (boardModel, center) => {
     let horizontal = [];
+    const leftBoundary = center - (center % 7);
+    const rightBoundary = center + (7 - (center % 7));
     for (let i = -3; i<= 3; i++) {
-      if (boardModel[center + i]) {
+      if (boardModel[center + i] >= 0 && 
+          (center + i >= leftBoundary) && 
+          (center + i <= rightBoundary)) {
         horizontal.push(boardModel[center + i]);
       }
     }
@@ -122,8 +126,13 @@ class App extends Component {
   getFSlashPiecesAroundCenter = (boardModel, center) => {
     let fslash = [];
     for (let i = -3; i <= 3; i++) {
-      if (boardModel[center + ((i*7) - i)]) {
-        fslash.push(boardModel[center + ((i*7) - i)]);
+      const rightBoundary = ((Math.floor((center + (i*7)) / 7) + 1) * 7) - 1;
+      const leftBoundary = rightBoundary - 6;
+      const fslashIdx = center + ((i*7) - i);
+      if (boardModel[fslashIdx] >= 0 && 
+          fslashIdx <= rightBoundary &&
+          fslashIdx >= leftBoundary) {
+        fslash.push(boardModel[fslashIdx]);
       }
     }
     return fslash;
@@ -132,8 +141,13 @@ class App extends Component {
   getBSlashPiecesAroundCenter = (boardModel, center) => {
     let bslash = [];
     for (let i = -3; i <= 3; i++) {
-      if (boardModel[center + ((i*7) + i)]) {
-        bslash.push(boardModel[center + ((i*7) + i)]);
+      const rightBoundary = ((Math.floor((center + (i*7)) / 7) + 1) * 7) - 1;
+      const leftBoundary = rightBoundary - 6;
+      const bslashIdx = center + ((i*7) + i);
+      if (boardModel[bslashIdx] >= 0 &&
+          bslashIdx <= rightBoundary &&
+          bslashIdx >= leftBoundary) {
+        bslash.push(boardModel[bslashIdx]);
       }
     }
     return bslash;

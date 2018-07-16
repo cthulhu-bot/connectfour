@@ -34,3 +34,11 @@
   margin-top: 1rem;
   color: red;
 }
+
+.App-display-winner-playerone {
+  color: blue;
+}
+
+.App-display-winner-playertwo {
+  color: red;
+}
