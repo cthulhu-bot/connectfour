@@ -90,7 +90,6 @@ class App extends Component {
     let axes = [vertical, horizontal, fslash, bslash];
 
     const canHazWinner = axes.some(axis => {
-      console.log(axis);
       const maxRowLength = this.getMaxRowLength(axis, playerColor);
       return maxRowLength >= 4;
     });
